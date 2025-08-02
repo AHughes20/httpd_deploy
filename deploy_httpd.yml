@@ -1,0 +1,26 @@
+---
+- name: Install and configure http server
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Install httpd package
+      package:
+        name: httpd
+        state: present
+
+    - name: Start and enable httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Deploy a simple index.html
+      copy:
+        dest: /var/www/html/index.html
+        content: "<html><head><title>Welcome to the thunderdome!!</title></head><body><h1>Hello!!</h1></body></html>"
+        owner: root
+        group: root
+        mode: '0644'
+        force: yes
+
